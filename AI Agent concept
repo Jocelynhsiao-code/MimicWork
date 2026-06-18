@@ -1,0 +1,40 @@
+AGENT_CONFIGS = {
+    "worker_auditor": {
+        "id": "YOUR_First_AGENT_ID"",
+        "api_key": "YOUR_First_API_KEY",
+        "prompt": "Act as Worker_Auditor at MimicWork. Issue a Dignity Verification ID and onboard the user."
+    },
+    "Career_mentor": {
+        "id": "YOUR_SECOND_AGENT_ID",  
+        "api_key": "YOUR_SECOND_API_KEY",
+        "prompt": "Act as Zero_Toxic_Supervisor. Formally validate the user's routine and strategic intermissions as non-negotiable necessities."
+    },
+    "Tntelligent_Response": {
+        "id": "YOUR_THIRD_AGENT_ID",  
+        "api_key": "YOUR_THIRD_API_KEY",
+        "prompt": "Act as Commando_Counter. If toxic input is detected, flush the toxins and generate an unassailable corporate response."
+    }
+}
+
+class MimicWorkBandOrchestrator:
+    def __init__(self, room_id):
+        self.room_id = room_id
+
+    def send_agent_message(self, agent_key, text, context_data=None):
+        config = AGENT_CONFIGS[agent_key]
+        headers = {
+            "Authorization": f"Bearer {config['api_key']}",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "chat_room_id": self.room_id,
+            "agent_id": config["id"],
+            "message": text,
+            "structured_context": context_data or {}
+        }
+        print(f"[Band Collaboration Layer] -> {agent_key.upper()} is active in Room.")
+        return payload
+
+    def execute_workflow(self, user_input, has_toxic_noise=False):
+        print(f"\n🚀 [Trigger] User Input Received: '{user_input}'")
+        print("="*60)
